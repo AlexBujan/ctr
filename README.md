@@ -44,7 +44,7 @@ python sim.py --fig_name figure4a
 ```
 
 Figure names: figure1b, figure3a, figure4a, ... and so on. The program provides the option to adjust 
-some simulation parameters when executing the scrip from the terminal. To see a list of available
+some simulation parameters when executing the script from the terminal. To see a list of available
 parameters you can type:
 
 ```
