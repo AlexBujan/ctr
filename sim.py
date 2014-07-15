@@ -46,7 +46,7 @@ def simulate():
         print '\t*E drive           :\t%s\n'%str(E_drive)
 
         if not reset_delays:
-            print '\n## Warning: delays have not been reset and they may be wrong! ##'
+            set_delays()
 
         print '\nSimulation parameters:'
         print '----------------------'
@@ -278,7 +278,7 @@ def figure1b():
     sigma           = 3.
     interval        = 0.
     jitter          = 0.
-    pulse_times = [1500.]
+    pulse_times     = [1500.]
     #simulation parameters
     record_toFile   = False
     return_recorders= True
@@ -637,7 +637,7 @@ Main function
 """
 
 def main():
-    global data_path,nest_dic,recorder_label
+    global data_path,nest_dic,recorder_label,reset_delays
     global sim_time,wup_time,stim_start,stim_stop
     global neuron_model,neuron_param
     global del_within,del_between,del_chain,del_pp
@@ -670,7 +670,6 @@ def main():
     parser.add_option("--jinh"       ,type="float"        ,default = -4.7     ,help="Inhibitory connection weight")
     parser.add_option("--jexthi"     ,type="float"        ,default = .8       ,help="Highest external connection weight")
     parser.add_option("--jextlo"     ,type="float"        ,default = .5       ,help="Lowest external connection weight")
-    parser.add_option("--fig_name"   ,type="string"       ,default = "sim"    ,help="name of the experiment")
     parser.add_option("--with-vm"    ,action ="store_true",dest = "record_Vm" ,help="add jitter to the interval")
     parser.add_option("--mem_only"   ,action ="store_true",dest = "mem_only"  ,help="Don't save spikes into disk'")
     parser.add_option("--no_pulses"  ,action ="store_true",dest = "no_pulses" ,help="Stimulus is a Poisson spike train")
@@ -687,6 +686,7 @@ def main():
     parser.add_option("--ac"         ,type="float"        ,default = 0.       ,help="Stimulus AC amplitude in kHz")
     parser.add_option("--freq"       ,type="float"        ,default = 0.       ,help="Stimulus AC frequency in Hz")
     parser.add_option("--phi"        ,type="float"        ,default = 0.       ,help="Stimulus AC phase in rad")
+    parser.add_option("--fig_name"   ,type="string"       ,default = "sim"    ,help="name of the experiment")
 
     (options, args) = parser.parse_args()
 
@@ -722,6 +722,7 @@ def main():
     wup_time        = 1e3
     stim_start      = wup_time+500.
     stim_stop       = sim_time-500.
+
     if options.no_verbose:
         verbose     = False
     else:
@@ -763,6 +764,7 @@ def main():
     LL_conn         = options.LLconn
 
     #delays
+    reset_delays    = False
     del_chain       = 1.
     del_pp          = .5
     del_within      = options.delWit

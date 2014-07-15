@@ -1,4 +1,3 @@
-#from nest import *
 import numpy as np
 import multiprocessing
 import commands
@@ -14,7 +13,6 @@ def reset_kernel(nest,dic,n_threads=None,seed=None):
 
 def reset_seed(nest,n_threads=None,seed=None):
     print '\t*number of cores available\t: %i'%multiprocessing.cpu_count()
-#    n_threads_per_cpu = commands.getstatusoutput('grep -i "physical id" /proc/cpuinfo | sort -u | wc -l')[1]
     if n_threads==None:
         n_threads=multiprocessing.cpu_count()
         print '\t*local_num_threads\t        : %i'%n_threads
