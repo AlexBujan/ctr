@@ -80,12 +80,10 @@ def simulate():
     sd_exc_list     = []
     sd_inh_list     = []
     sd_group_list   = []
-    layers_ex   = []
-    layers_in   = []
-    group       = []
-    #reset threshold for spiking neurons
-    if neuron_param['V_th']>0:
-        neuron_param.update({'V_th':-54.})
+    layers_ex       = []
+    layers_in       = []
+    group           = []
+
     #create neurons and connect
     for i in xrange(n_layers):
         #create EI layers
@@ -255,6 +253,7 @@ def set_delays():
     del_exc_inh = del_between
     del_inh_exc = del_between
     reset_delays = True
+
 def set_weights():
     global j_inh_inh,j_inh_exc,j_exc_inh,j_exc_exc
     j_inh_inh = jinh*g
@@ -263,10 +262,36 @@ def set_weights():
     j_exc_exc = jexc
 
 """
-###########
-Experiments
-###########
+#######
+Figures
+#######
 """
+def figure1b():
+    global record_Vm,record_toFile,return_recorders,recorder_params
+    global pulses,activity,sigma,interval,jitter,pulse_times
+    '''
+    parameters
+    '''
+    #stimulus parameters
+    pulses          = True
+    activity        = 20
+    sigma           = 3.
+    interval        = 0.
+    jitter          = 0.
+    pulse_times = [1500.]
+    #simulation parameters
+    record_toFile   = False
+    return_recorders= True
+    record_Vm       = True
+    #recorders
+    recorder_params.update({'to_file':record_toFile})
+    '''
+    simulate
+    '''
+    recorders   = simulate()
+    devices     = [recorders[0][0][0],recorders[0][1][0],recorders[0][2][0],recorders[0][-1]]
+    plot_act(sd_list=devices,vm_list =[recorders[1][0]],n_pop=[Nexc,group_size,Ninh],wupTime=1250.,simTime=1750.,binSize=10.,figureName='figure1b')
+
 
 def figure3a():
     global record_Vm,record_toFile,return_recorders,recorder_params
@@ -645,7 +670,7 @@ def main():
     parser.add_option("--jinh"       ,type="float"        ,default = -4.7     ,help="Inhibitory connection weight")
     parser.add_option("--jexthi"     ,type="float"        ,default = .8       ,help="Highest external connection weight")
     parser.add_option("--jextlo"     ,type="float"        ,default = .5       ,help="Lowest external connection weight")
-    parser.add_option("--exp_name"   ,type="string"       ,default = "sim"    ,help="name of the experiment")
+    parser.add_option("--fig_name"   ,type="string"       ,default = "sim"    ,help="name of the experiment")
     parser.add_option("--with-vm"    ,action ="store_true",dest = "record_Vm" ,help="add jitter to the interval")
     parser.add_option("--mem_only"   ,action ="store_true",dest = "mem_only"  ,help="Don't save spikes into disk'")
     parser.add_option("--no_pulses"  ,action ="store_true",dest = "no_pulses" ,help="Stimulus is a Poisson spike train")
@@ -670,9 +695,10 @@ def main():
     """
 
     #data path for Nest data
-    data_path       = os.getcwd()
+    data_path = os.getcwd()
     if not os.path.exists(data_path):
         os.makedirs(data_path)
+
     #Nest configuration dictionary
     nest_dic = {'resolution':.1,'print_time':False,'overwrite_files':True,'data_path':data_path}
     recorder_label  = 'ctr_net'
@@ -777,14 +803,16 @@ def main():
     """
     #select the experiment
     """
-    experiment_name=options.exp_name
-    if experiment_name=='figure3a':
+    figure_name=options.fig_name
+    if figure_name=='figure1b':
+        figure1b()
+    elif figure_name=='figure3a':
         figure3a()
-    elif experiment_name=='figure4a':
+    elif figure_name=='figure4a':
         figure4a()
-    elif experiment_name=='figure5b':
+    elif figure_name=='figure5b':
         figure5b()
-    elif experiment_name=='figureS6a':
+    elif figure_name=='figureS6a':
         figureS6a()
 
 
