@@ -51,5 +51,16 @@ parameters you can type:
 python sim.py --help
 ```
 
+When executing the scripts as indicated above, many of these parameters will be overwritten. To avoid 
+this, you will have to modify the script. Alternatively, you can execute the script without adding 
+the --fig_name argument e.g.:
+
+```
+python sim.py --activity 20 --sigma 3. --with-vm
+```
+
+This will run a simulation with the specified parameters and safe the results to ".gdf" and ".dat" files 
+in your local directory. Thus, it will not generate any figure by default. 
+
 
 
