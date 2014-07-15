@@ -40,7 +40,7 @@ through resonance in spiking neuronal networks":
 To generate the figures you can type something like this:
 
 ```
-python sim.py --exp_name figure4a
+python sim.py --fig_name figure4a
 ```
 
 Figure names: figure1b, figure3a, figure4a, ... and so on. The program provides the option to adjust 
