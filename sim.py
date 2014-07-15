@@ -63,7 +63,7 @@ def simulate():
     nest.CopyModel("static_synapse","CH",{"weight":j_chain,"delay":del_chain})
     nest.CopyModel("static_synapse","PP",{"weight":j_pulse_packet,"delay":del_pp})
 
-    #backgtround input
+    #background input
     pg_gen_inh = nest.Create('poisson_generator',params={'rate':poi_rate_bkg_inh*1e3})
     if pulses:
         pg_gen_exc = nest.Create('poisson_generator',params={'rate':poi_rate_bkg_exc*1e3})
