@@ -644,8 +644,8 @@ def main():
     global g,j_chain,j_ext_high,j_ext_low,jexc,jinh,j_pulse_packet,j_inh_inh,j_ext_II
     global cp_exc_exc,cp_exc_inh,cp_inh_exc,cp_inh_inh,cp_chain
     global syn_exc_exc,syn_exc_inh,syn_inh_inh,syn_inh_exc,syn_chain
-    global record_toFile,n_threads,record_Vm,LL_conn,verbose,recorder_params
-    global activity,sigma,jitter,pulse_times,pulses
+    global record_toFile,n_threads,record_Vm,LL_conn,verbose,recorder_params,return_recorders
+    global activity,sigma,interval,jitter,pulse_times,pulses
     global poi_rate_bkg_exc,poi_rate_bkg_inh,poi_rate_bkg_II
     global Nexc,Ninh,n_layers,group_size
     global ac,dc,freq,phi,E_drive
@@ -723,66 +723,68 @@ def main():
     stim_start      = wup_time+500.
     stim_stop       = sim_time-500.
     if options.no_verbose:
-        verbose = False
+        verbose     = False
     else:
-        verbose = True
+        verbose     = True
 
     #stimulus parameters
     if options.no_pulses:
-        pulses  = False
-        ac      = options.ac*1e3
-        freq    = options.freq
-        phi     = options.phi
-        dc      = options.dc
+        pulses      = False
+        ac          = options.ac*1e3
+        freq        = options.freq
+        phi         = options.phi
+        dc          = options.dc
     else:
-        pulses  = True
-        activity= options.activity
-        sigma   = options.sigma
-        jitter  = options.jitter
+        pulses      = True
+        activity    = options.activity
+        interval    = options.interval
+        sigma       = options.sigma
+        jitter      = options.jitter
+        pulse_times = []
 
     #network parameters
-    Nexc = options.nExc
-    n_layers = options.nLayers
-    Ninh = 500
-    group_size = 300
+    Nexc            = options.nExc
+    n_layers        = options.nLayers
+    Ninh            = 500
+    group_size      = 300
 
-    cp_exc_exc = .05
-    cp_exc_inh = .1
-    cp_inh_exc = .1
-    cp_inh_inh = .1
-    cp_chain   = .1
+    cp_exc_exc      = .05
+    cp_exc_inh      = .1
+    cp_inh_exc      = .1
+    cp_inh_inh      = .1
+    cp_chain        = .1
 
-    syn_exc_exc = int(Nexc*cp_exc_exc)
-    syn_exc_inh = int(Ninh*cp_exc_inh)
-    syn_inh_inh = int(Ninh*cp_inh_inh)
-    syn_inh_exc = int(Nexc*cp_inh_exc)
-    syn_chain   = int(group_size*cp_chain)
+    syn_exc_exc     = int(Nexc*cp_exc_exc)
+    syn_exc_inh     = int(Ninh*cp_exc_inh)
+    syn_inh_inh     = int(Ninh*cp_inh_inh)
+    syn_inh_exc     = int(Nexc*cp_inh_exc)
+    syn_chain       = int(group_size*cp_chain)
 
-    LL_conn = options.LLconn
+    LL_conn         = options.LLconn
 
     #delays
-    del_chain   = 1.
-    del_pp      = .5
-    del_within  = options.delWit
-    del_between = options.delBet
+    del_chain       = 1.
+    del_pp          = .5
+    del_within      = options.delWit
+    del_between     = options.delBet
     set_delays()
 
     #weights
-    g = options.g
-    jexc = options.jexc
-    jinh = options.jinh
-    j_ext_high = options.jexthi
-    j_ext_low = options.jextlo
-    j_chain = options.jChain
-    j_pulse_packet = options.jPp
+    g               = options.g
+    jexc            = options.jexc
+    jinh            = options.jinh
+    j_ext_high      = options.jexthi
+    j_ext_low       = options.jextlo
+    j_chain         = options.jChain
+    j_pulse_packet  = options.jPp
     set_weights()
-    j_inh_inh = options.j_II
-    j_ext_II = options.j_ext_II
+    j_inh_inh       = options.j_II
+    j_ext_II        = options.j_ext_II
 
     #Poisson input rates
-    poi_rate_bkg_exc    = options.ext
-    poi_rate_bkg_inh    = options.extI
-    poi_rate_bkg_II     = options.extII
+    poi_rate_bkg_exc= options.ext
+    poi_rate_bkg_inh= options.extI
+    poi_rate_bkg_II = options.extII
     if options.E_drive:
         E_drive = True
     else:
@@ -814,7 +816,10 @@ def main():
         figure5b()
     elif figure_name=='figureS6a':
         figureS6a()
-
+    else:
+        return_recorders= False
+        recorder_params.update({'to_memory':False})
+        simulate()
 
 if __name__=='__main__':
     main()
