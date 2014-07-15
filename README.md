@@ -28,7 +28,7 @@ make install
 Main file "sim.py"
 -----------------
 
-This file reproduces "out-of-the-box" the following figures from the manuscript "Communication
+This file reproduces out of the box the following figures from the manuscript "Communication
 through resonance in spiking neuronal networks":
 
 - Fig. 1b
@@ -43,7 +43,7 @@ To generate the figures you can type something like this:
 python sim.py --exp_name figure4a
 ```
 
-Figure names: figure1b, figure3a, figure4a and so on. The program provides the option to adjust 
+Figure names: figure1b, figure3a, figure4a, ... and so on. The program provides the option to adjust 
 some simulation parameters when executing the scrip from the terminal. To see a list of available
 parameters you can type:
 
