@@ -59,8 +59,8 @@ the --fig_name argument e.g.:
 python sim.py --activity 20 --sigma 3. --with-vm
 ```
 
-This will run a simulation with the specified parameters and safe the results to ".gdf" and ".dat" files 
-in your local directory. Thus, it will not generate any figure by default. 
+This will run a simulation with the specified parameters and save the results to ".gdf" and ".dat" files 
+in your local directory. It will not generate any figure by default. 
 
 
 
