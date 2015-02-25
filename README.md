@@ -28,7 +28,9 @@ make install
 Main file "sim.py"
 -----------------
 
-This file reproduces out of the box the following figures from the manuscript Hahn, G., Bujan, A. F., Frégnac, Y., Aertsen, A., & Kumar, A. (2014). Communication through resonance in spiking neuronal networks. PLoS computational biology, 10(8), e1003811.:
+This file reproduces out of the box the following figures from the manuscript:
+
+Hahn, G., Bujan, A. F., Frégnac, Y., Aertsen, A., & Kumar, A. (2014). Communication through resonance in spiking neuronal networks. PLoS computational biology, 10(8), e1003811.
 
 - Fig. 1b
 - Fig. 3a
